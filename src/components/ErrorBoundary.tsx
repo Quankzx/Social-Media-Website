@@ -25,18 +25,28 @@ class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="card text-center py-12">
-          <div className="text-6xl mb-4">⚠️</div>
-          <h2 className="text-heading-2 mb-4">Đã xảy ra lỗi</h2>
-          <p className="text-body mb-6">
-            Xin lỗi, có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.
-          </p>
-          <button
-            onClick={() => this.setState({ hasError: false })}
-            className="btn-primary"
-          >
-            Thử lại
-          </button>
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+          <div className="max-w-xl w-full bg-white rounded shadow p-8 text-center">
+            <div className="text-6xl mb-4">⚠️</div>
+            <h2 className="text-2xl font-semibold mb-4">Đã xảy ra lỗi</h2>
+            <p className="text-sm text-gray-600 mb-6">
+              Xin lỗi, có lỗi không mong muốn xảy ra. Vui lòng thử lại sau hoặc liên hệ quản trị.
+            </p>
+            <div className="flex items-center justify-center gap-3">
+              <button
+                onClick={() => this.setState({ hasError: false })}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Thử lại
+              </button>
+              <button
+                onClick={() => window.location.reload()}
+                className="px-4 py-2 bg-gray-100 text-gray-800 rounded hover:bg-gray-200"
+              >
+                Tải lại trang
+              </button>
+            </div>
+          </div>
         </div>
       );
     }

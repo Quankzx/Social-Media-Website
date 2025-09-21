@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useAppStore } from '../../store';
+import PostEditor from './PostEditor';
 
 const ContentCalendar = () => {
+  const { posts, deletePost } = useAppStore();
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [editingPost, setEditingPost] = useState<any>(null);
+
+  const handleCreate = () => {
+    setEditingPost(null);
+    setIsEditorOpen(true);
+  };
+
+  const handleEdit = (post: any) => {
+    setEditingPost(post);
+    setIsEditorOpen(true);
+  };
+
+  const handleDelete = (id: string) => {
+    if (window.confirm('Bạn có chắc muốn xóa bài đăng này?')) {
+      deletePost(id);
+    }
+  };
+
   return (
     <div className="bg-white rounded shadow p-4 mt-4">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold">Lịch đăng bài</h3>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tạo bài mới</button>
+        <button onClick={handleCreate} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tạo bài mới</button>
       </div>
       <div className="flex gap-4 mb-4">
         <select className="border rounded px-2 py-1">
@@ -34,14 +56,8 @@ const ContentCalendar = () => {
           </tr>
         </thead>
         <tbody>
-          {/* Demo dữ liệu lịch đăng */}
-          {[
-            {date: '2025-09-22', title: 'Bài Facebook 1', network: 'Facebook', status: 'Đã đăng'},
-            {date: '2025-09-23', title: 'Video TikTok', network: 'TikTok', status: 'Lên lịch'},
-            {date: '2025-09-24', title: 'Shorts YouTube', network: 'YouTube', status: 'Nháp'},
-            {date: '2025-09-25', title: 'Ảnh Instagram', network: 'Instagram', status: 'Đã đăng'},
-          ].map((item, idx) => (
-            <tr key={idx} className="border-b hover:bg-gray-50">
+          {posts.map((item) => (
+            <tr key={item.id} className="border-b hover:bg-gray-50">
               <td className="py-2">{item.date}</td>
               <td className="py-2 font-medium">{item.title}</td>
               <td className="py-2">{item.network}</td>
@@ -49,13 +65,18 @@ const ContentCalendar = () => {
                 <span className={item.status === 'Đã đăng' ? 'text-green-600' : item.status === 'Lên lịch' ? 'text-blue-600' : 'text-yellow-600'}>{item.status}</span>
               </td>
               <td className="py-2">
-                <button className="px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 mr-2">Sửa</button>
-                <button className="px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200">Xoá</button>
+                <button onClick={() => handleEdit(item)} className="px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 mr-2">Sửa</button>
+                <button onClick={() => handleDelete(item.id)} className="px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200">Xoá</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <PostEditor
+        isOpen={isEditorOpen}
+        onClose={() => setIsEditorOpen(false)}
+        post={editingPost}
+      />
     </div>
   );
 };

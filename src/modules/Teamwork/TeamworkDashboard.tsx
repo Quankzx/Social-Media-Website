@@ -1,6 +1,38 @@
 import React from 'react';
+import Skeleton from '../../components/Skeleton';
+import { useAppStore } from '../../store';
 
 const TeamworkDashboard = () => {
+  const isLoading = useAppStore((s) => s.isAppLoading);
+
+  if (isLoading) {
+    return (
+      <div className="p-4">
+        <Skeleton variant="text" className="h-8 w-64 mb-4" />
+        <div className="bg-white rounded shadow p-4 mb-4">
+          <Skeleton className="h-4 w-3/4 mb-2" />
+          <Skeleton className="h-3 w-1/4" />
+        </div>
+        <div className="bg-white rounded shadow p-4 mb-4">
+          {Array.from({ length: 3 }).map((_, idx) => (
+            <div key={idx} className="flex items-center gap-4 py-3">
+              <Skeleton className="w-10 h-10 rounded-full" />
+              <div className="flex-1">
+                <Skeleton className="h-4 w-1/3 mb-2" />
+                <Skeleton className="h-3 w-1/4" />
+              </div>
+              <Skeleton className="h-6 w-24" />
+            </div>
+          ))}
+        </div>
+        <div className="bg-white rounded shadow p-4">
+          <Skeleton className="h-4 w-1/3 mb-3" />
+          <Skeleton className="h-12 w-full" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Quản lý phân quyền & teamwork</h2>
