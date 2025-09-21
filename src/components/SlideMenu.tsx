@@ -44,36 +44,35 @@ const SlideMenu = ({
   return (
     <>
       <div
-        className={`fixed top-0 left-0 h-full w-72 bg-white shadow-xl transform transition-transform duration-300 z-40 border-r border-gray-200 ${
+        className={`fixed top-16 left-0 h-[calc(100vh-4rem)] w-72 bg-white shadow-xl transform transition-transform duration-300 z-40 border-r border-gray-200 ${
           open ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0`}
+        } md:translate-x-0 overflow-y-auto scrollbar-thin`}
         role="navigation"
         aria-label="Main navigation"
       >
         <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">SP</span>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Social Portal</h3>
-                <p className="text-xs text-gray-500">Dashboard</p>
-              </div>
-            </div>
-            <button 
-              onClick={() => setOpen(false)} 
-              aria-label="Close menu" 
-              className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 md:hidden transition-colors"
-            >
-              <X className="w-5 h-5 text-gray-500" />
-            </button>
-          </div>
-          
           {/* Navigation */}
-          <div className="flex-1 px-4 py-6">
+          <div className="flex-1 px-4 py-6 pb-24">
             <nav className="space-y-2">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">SP</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Social Portal</h3>
+                    <p className="text-xs text-gray-500">Dashboard</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setOpen(false)} 
+                  aria-label="Close menu" 
+                  className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 md:hidden transition-colors"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+              
               {items.map((it, idx) => {
                 const id = it.href.replace('#', '');
                 const isActive = active === id;
@@ -114,7 +113,7 @@ const SlideMenu = ({
           </div>
           
           {/* Footer */}
-          <div className="p-4 border-t border-gray-200">
+          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
             <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
               <img 
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" 
@@ -134,7 +133,7 @@ const SlideMenu = ({
       {open && (
         <div
           onClick={() => setOpen(false)}
-          className="fixed inset-0 bg-black/50 z-30 md:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 z-30 md:hidden backdrop-blur-sm mt-16"
           aria-hidden
         />
       )}

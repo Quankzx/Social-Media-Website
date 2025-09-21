@@ -28,16 +28,14 @@ function App() {
     const id = href.replace('#', '');
     setActive(id);
     setSidebarOpen(false);
-    // scroll to section if present
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-gray-50">
         <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
-        <div className="flex">
+        
+        <div className="flex min-h-[calc(100vh-4rem)]">
           <SlideMenu 
             items={breadcrumbItems} 
             onSelect={handleSelect} 
@@ -45,46 +43,60 @@ function App() {
             isOpen={sidebarOpen}
             onClose={() => setSidebarOpen(false)}
           />
-          <main className="flex-1 md:ml-72 transition-all duration-300">
-            <div className="p-4 sm:p-6 lg:p-8">
-            {/* Render only active section content to avoid errors and switch views */}
-            {active === 'dashboard' && (
-              <section id="dashboard">
-                <DashboardOverview />
-              </section>
-            )}
-            {active === 'account' && (
-              <section id="account" className="space-y-6">
-                <div className="card">
-                  <h2 className="text-heading-2 mb-4">Tài khoản</h2>
-                  <AccountDashboard />
-                </div>
-              </section>
-            )}
-            {active === 'content' && (
-              <section id="content" className="space-y-6">
-                <div className="card">
-                  <h2 className="text-heading-2 mb-4">Nội dung</h2>
-                  <ContentDashboard />
-                </div>
-              </section>
-            )}
-            {active === 'report' && (
-              <section id="report" className="space-y-6">
-                <div className="card">
-                  <h2 className="text-heading-2 mb-4">Báo cáo</h2>
-                  <ReportDashboard />
-                </div>
-              </section>
-            )}
-            {active === 'teamwork' && (
-              <section id="teamwork" className="space-y-6">
-                <div className="card">
-                  <h2 className="text-heading-2 mb-4">Teamwork</h2>
-                  <TeamworkDashboard />
-                </div>
-              </section>
-            )}
+          
+          <div className="flex-1 md:ml-72 flex flex-col transition-all duration-300">
+            <main className="flex-1">
+              <div className="p-4 sm:p-6 lg:p-8 min-h-full">
+                {/* Render only active section content to avoid errors and switch views */}
+                {active === 'dashboard' && (
+                  <section id="dashboard">
+                    <DashboardOverview />
+                  </section>
+                )}
+                {active === 'account' && (
+                  <section id="account" className="space-y-6">
+                    <div className="card">
+                      <h2 className="text-heading-2 mb-4">Tài khoản</h2>
+                      <AccountDashboard />
+                    </div>
+                  </section>
+                )}
+                {active === 'content' && (
+                  <section id="content" className="space-y-6">
+                    <div className="card">
+                      <h2 className="text-heading-2 mb-4">Nội dung</h2>
+                      <ContentDashboard />
+                    </div>
+                  </section>
+                )}
+                {active === 'report' && (
+                  <section id="report" className="space-y-6">
+                    <div className="card">
+                      <h2 className="text-heading-2 mb-4">Báo cáo</h2>
+                      <ReportDashboard />
+                    </div>
+                  </section>
+                )}
+                {active === 'teamwork' && (
+                  <section id="teamwork" className="space-y-6">
+                    <div className="card">
+                      <h2 className="text-heading-2 mb-4">Teamwork</h2>
+                      <TeamworkDashboard />
+                    </div>
+                  </section>
+                )}
+              </div>
+            </main>
+            
+            <Footer />
+          </div>
+        </div>
+      </div>
+    </ErrorBoundary>
+  );
+}
+
+export default App;
             </div>
           </main>
         </div>
